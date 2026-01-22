@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Marvel Avengers Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>MARVEL AVENGERS</h1>
+    <p>Interactive Character Portfolio</p>
+</header>
+
+<section class="card-container">
+
+    <div class="card" onclick="showHero('ironman')">
+        <img src="ironman.png" alt="Iron Man">
+        <h3>Iron Man</h3>
+    </div>
+
+    <div class="card" onclick="showHero('captain')">
+        <img src="caps.png" alt="Captain America">
+        <h3>Captain America</h3>
+    </div>
+
+    <div class="card" onclick="showHero('thor')">
+        <img src="thor.png" alt="Thor">
+        <h3>Thor</h3>
+    </div>
+
+    <div class="card" onclick="showHero('hulk')">
+        <img src="hulk.png" alt="Hulk">
+        <h3>Hulk</h3>
+    </div>
+
+    <div class="card" onclick="showHero('widow')">
+        <img src="blackwidow.png" alt="Black Widow">
+        <h3>Black Widow</h3>
+    </div>
+
+</section>
+
+<section class="details">
+    <h2 id="hero-name">Select an Avenger</h2>
+    <p id="hero-desc">Click on a character to view details</p>
+    <ul id="hero-info"></ul>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
