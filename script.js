@@ -62,6 +62,7 @@ function showHero(hero) {
         }
     };
 
+    /* ===== EXISTING FUNCTIONALITY (UNCHANGED) ===== */
     document.body.style.background = data[hero].theme;
     name.innerText = data[hero].name;
     desc.innerText = data[hero].desc;
@@ -72,4 +73,41 @@ function showHero(hero) {
         li.innerText = item;
         info.appendChild(li);
     });
+
+    /* ===== ADD-ON: OPEN ANIMATED DASHBOARD ===== */
+    openHeroDashboard(hero, data[hero]);
+}
+
+
+/* ===== DASHBOARD OPEN FUNCTION ===== */
+function openHeroDashboard(heroKey, heroData) {
+
+    const modal = document.getElementById("heroModal");
+    modal.classList.add("active");
+
+    document.getElementById("modal-name").innerText = heroData.name;
+    document.getElementById("modal-title").innerText = heroData.desc;
+
+    // Get clicked character image dynamically
+    const imgSrc = document
+        .querySelector(`[onclick="showHero('${heroKey}')"] img`).src;
+
+    document.getElementById("modal-img").src = imgSrc;
+
+    const detailsBox = document.getElementById("modal-details");
+    detailsBox.innerHTML = "";
+
+    heroData.details.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "modal-box";
+        div.style.animationDelay = `${index * 0.15}s`;
+        div.innerText = item;
+        detailsBox.appendChild(div);
+    });
+}
+
+
+/* ===== DASHBOARD CLOSE FUNCTION ===== */
+function closeModal() {
+    document.getElementById("heroModal").classList.remove("active");
 }
