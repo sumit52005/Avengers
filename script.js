@@ -217,7 +217,51 @@ const heroThemes = {
     widow: "linear-gradient(135deg, #000000, #434343, #1a1a1a)"
 };
 
-// Add hover effects for background changes
+// Audio elements for hero quotes (fallback to text-to-speech if files don't exist)
+const heroAudios = {
+    ironman: new Audio('audio/ironman-quote.mp3'),
+    captain: new Audio('audio/captain-quote.mp3'),
+    thor: new Audio('audio/thor-quote.mp3'),
+    hulk: new Audio('audio/hulk-quote.mp3'),
+    widow: new Audio('audio/widow-quote.mp3')
+};
+
+// Hero quotes for text-to-speech fallback
+const heroQuotes = {
+    ironman: "I am Iron Man",
+    captain: "I can do this all day",
+    thor: "Bring me Thanos!",
+    hulk: "Hulk smash!",
+    widow: "I don't have friends, I have one."
+};
+
+// Text-to-speech function
+function speakQuote(quote, voiceName = null) {
+    if ('speechSynthesis' in window) {
+        // Stop any current speech
+        speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(quote);
+
+        // Try to find a suitable voice
+        const voices = speechSynthesis.getVoices();
+        if (voiceName) {
+            const preferredVoice = voices.find(voice => voice.name.includes(voiceName));
+            if (preferredVoice) {
+                utterance.voice = preferredVoice;
+            }
+        }
+
+        // Adjust speech settings for better experience
+        utterance.rate = 0.8;
+        utterance.pitch = 1;
+        utterance.volume = 0.8;
+
+        speechSynthesis.speak(utterance);
+    }
+}
+
+// Add hover effects for background changes and audio
 document.addEventListener("DOMContentLoaded", () => {
     const cards = document.querySelectorAll(".card");
 
@@ -225,13 +269,43 @@ document.addEventListener("DOMContentLoaded", () => {
         const heroKey = card.getAttribute("onclick").match(/'([^']+)'/)[1];
 
         card.addEventListener("mouseenter", () => {
+            // Change background
             document.body.style.background = heroThemes[heroKey];
             document.body.style.transition = "background 0.5s ease";
+
+            // Play hero quote - try audio first, then text-to-speech
+            if (heroAudios[heroKey]) {
+                // Stop any currently playing audio
+                Object.values(heroAudios).forEach(audio => {
+                    audio.pause();
+                    audio.currentTime = 0;
+                });
+
+                // Stop any text-to-speech
+                speechSynthesis.cancel();
+
+                // Play the current hero's quote
+                heroAudios[heroKey].play().catch(() => {
+                    // Fallback to text-to-speech if audio fails to load
+                    console.log(`Audio for ${heroKey} not found, using text-to-speech`);
+                    speakQuote(heroQuotes[heroKey]);
+                });
+            } else {
+                // Fallback to text-to-speech if no audio element
+                speakQuote(heroQuotes[heroKey]);
+            }
         });
 
         card.addEventListener("mouseleave", () => {
+            // Reset background
             document.body.style.background = "linear-gradient(135deg, #0c0c0c, #1a1a1a, #2a2a2a)";
             document.body.style.transition = "background 0.5s ease";
+
+            // Stop audio when leaving
+            if (heroAudios[heroKey]) {
+                heroAudios[heroKey].pause();
+                heroAudios[heroKey].currentTime = 0;
+            }
         });
     });
 });

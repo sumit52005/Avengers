@@ -78,3 +78,17 @@ hero.details.forEach(item => {
 function goBack() {
     window.location.href = "index.html";
 }
+
+function closeFightVideo() {
+    const container = document.getElementById("fightVideoContainer");
+    container.classList.remove("show");
+    const video = document.getElementById("fightVideo");
+    video.pause();
+}
+
+// Show fight video only for Iron Man
+const selectedHero = sessionStorage.getItem("selectedHero");
+if (selectedHero === "ironman") {
+    const container = document.getElementById("fightVideoContainer");
+    container.classList.add("show");
+}

@@ -22,6 +22,17 @@
         <button onclick="goBack()">← Back to Avengers</button>
     </div>
 
+    <!-- Iron Man Fight Video - Corner Segment -->
+    <div id="fightVideoContainer" class="fight-video-container">
+        <video id="fightVideo" class="fight-video" autoplay muted loop playsinline>
+            <source src="videos/ironman_fight.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay">
+            <span class="video-label">IRON MAN FIGHT</span>
+            <button class="video-close" onclick="closeFightVideo()">×</button>
+        </div>
+    </div>
+
 </div>
 
 <script src="hero.js"></script>
