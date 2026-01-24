@@ -207,3 +207,31 @@ function openHero(card, heroKey) {
         window.location.href = "hero.html";
     }, 600);
 }
+
+// Hero themes for background changes
+const heroThemes = {
+    ironman: "linear-gradient(135deg, #b31217, #8b0000, #000)",
+    captain: "linear-gradient(135deg, #1e3c72, #0f2540, #000)",
+    thor: "linear-gradient(135deg, #4b0082, #2e004f, #000)",
+    hulk: "linear-gradient(135deg, #2e7d32, #1b5e20, #000)",
+    widow: "linear-gradient(135deg, #000000, #434343, #1a1a1a)"
+};
+
+// Add hover effects for background changes
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        const heroKey = card.getAttribute("onclick").match(/'([^']+)'/)[1];
+
+        card.addEventListener("mouseenter", () => {
+            document.body.style.background = heroThemes[heroKey];
+            document.body.style.transition = "background 0.5s ease";
+        });
+
+        card.addEventListener("mouseleave", () => {
+            document.body.style.background = "linear-gradient(135deg, #0c0c0c, #1a1a1a, #2a2a2a)";
+            document.body.style.transition = "background 0.5s ease";
+        });
+    });
+});
