@@ -1,3 +1,7 @@
+/* ================================
+   AVENGERS CHARACTER LOGIC
+================================ */
+
 function showHero(hero) {
 
     const name = document.getElementById("hero-name");
@@ -62,7 +66,7 @@ function showHero(hero) {
         }
     };
 
-    /* ===== EXISTING FUNCTIONALITY (UNCHANGED) ===== */
+    /* EXISTING FUNCTIONALITY (UNCHANGED) */
     document.body.style.background = data[hero].theme;
     name.innerText = data[hero].name;
     desc.innerText = data[hero].desc;
@@ -74,12 +78,14 @@ function showHero(hero) {
         info.appendChild(li);
     });
 
-    /* ===== ADD-ON: OPEN ANIMATED DASHBOARD ===== */
+    /* DASHBOARD ADD-ON */
     openHeroDashboard(hero, data[hero]);
 }
 
+/* ================================
+   HERO DASHBOARD MODAL
+================================ */
 
-/* ===== DASHBOARD OPEN FUNCTION ===== */
 function openHeroDashboard(heroKey, heroData) {
 
     const modal = document.getElementById("heroModal");
@@ -88,7 +94,6 @@ function openHeroDashboard(heroKey, heroData) {
     document.getElementById("modal-name").innerText = heroData.name;
     document.getElementById("modal-title").innerText = heroData.desc;
 
-    // Get clicked character image dynamically
     const imgSrc = document
         .querySelector(`[onclick="showHero('${heroKey}')"] img`).src;
 
@@ -106,8 +111,99 @@ function openHeroDashboard(heroKey, heroData) {
     });
 }
 
-
-/* ===== DASHBOARD CLOSE FUNCTION ===== */
 function closeModal() {
     document.getElementById("heroModal").classList.remove("active");
+}
+
+/* ================================
+   CINEMATIC INTRO (FIXED & SAFE)
+================================ */
+// Skip intro if already played
+if (sessionStorage.getItem("introPlayed") === "true") {
+    const intro = document.getElementById("intro-screen");
+    intro.style.display = "none";
+   
+}
+
+
+
+
+window.addEventListener("load", () => {
+
+    const introScreen = document.getElementById("intro-screen");
+
+    const introVideo = document.getElementById("introVideo");
+    const logoVideo = document.getElementById("logoVideo");
+
+    const soundBtn = document.getElementById("sound-btn");
+
+    const marvelLogo = document.getElementById("marvel-logo");
+    const journeyText = document.getElementById("journey-text");
+    const avengersLogo = document.getElementById("avengers-logo");
+
+    // Hide text initially
+    marvelLogo.classList.add("hidden");
+    journeyText.classList.add("hidden");
+    avengersLogo.classList.add("hidden");
+
+    // Enable sound on user click
+    soundBtn.addEventListener("click", () => {
+        introVideo.muted = false;
+        logoVideo.muted = false;
+        introVideo.volume = 1;
+        logoVideo.volume = 1;
+        soundBtn.style.display = "none";
+    });
+
+    /* ===== PLAY FIRST VIDEO ===== */
+    introVideo.play().catch(() => {});
+
+    introVideo.onended = () => {
+        introVideo.style.display = "none";
+
+        /* ===== PLAY SECOND VIDEO ===== */
+        logoVideo.style.display = "block";
+        logoVideo.play().catch(() => {});
+    };
+
+    /* ===== AFTER SECOND VIDEO ===== */
+    logoVideo.onended = () => {
+
+        // LET'S START A NEW JOURNEY
+        journeyText.classList.remove("hidden");
+        journeyText.classList.add("avengers-glow");
+
+        // REMOVE INTRO SCREEN
+        setTimeout(() => {
+            introScreen.style.opacity = "0";
+            setTimeout(() => {
+                introScreen.style.display = "none";
+            }, 1000);
+        }, 4000);
+    };
+});
+
+function openHero(card, heroKey) {
+
+    const img = card.querySelector("img");
+
+    sessionStorage.setItem("introPlayed", "true");
+
+
+    // Save selected hero
+    sessionStorage.setItem("selectedHero", heroKey);
+
+    // Animate image
+    img.style.transition = "0.6s ease";
+    img.style.transform = "scale(3)";
+    img.style.zIndex = "999";
+
+    // Fade out page
+    document.body.style.transition = "0.6s";
+    document.body.style.opacity = "0";
+
+    // Navigate after animation
+    setTimeout(() => {
+        window.location.href = "hero.html";
+    }, 600);
 }

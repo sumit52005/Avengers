@@ -2,60 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Marvel Avengers Portfolio</title>
+    <title>Avengers Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-    <h1>MARVEL AVENGERS</h1>
+<!-- ===== INTRO SCREEN ===== -->
+<!-- ===== INTRO SCREEN ===== -->
+<!-- ===== INTRO SCREEN ===== -->
+<div id="intro-screen">
+
+    <!-- INTRO VIDEO (FIRST) -->
+    <video id="introVideo" muted playsinline preload="auto">
+        <source src="videos/marvel-intro.mp4" type="video/mp4">
+    </video>
+
+    <!-- LOGO VIDEO (SECOND) -->
+    <video id="logoVideo" muted playsinline preload="auto" style="display:none;">
+        <source src="videos/logo.mp4" type="video/mp4">
+    </video>
+
+    <!-- ENABLE SOUND -->
+    <div id="sound-btn">🔊 Click to enable sound</div>
+
+    <!-- TEXT / LOGOS -->
+    <div id="marvel-logo" class="hidden">MARVEL STUDIOS</div>
+    <div id="journey-text" class="hidden">Start Your Journey</div>
+    <div id="avengers-logo" class="hidden">AVENGERS</div>
+
+</div>
+
+
+<!-- ===== EXISTING WEBSITE CONTENT ===== -->
+<header class="header">
+    <h1>Marvel Avengers</h1>
     <p>Interactive Character Portfolio</p>
 </header>
 
 <section class="card-container">
+    <div class="card" onclick="openHero(this, 'ironman')">
+    <img src="images/ironman.png">
+    <h3>Iron Man</h3>
+</div>
 
-    <div class="card" onclick="showHero('ironman')">
-        <img src="ironman.png" alt="Iron Man">
-        <h3>Iron Man</h3>
-    </div>
-
-    <div class="card" onclick="showHero('captain')">
-        <img src="caps.png" alt="Captain America">
+    <div class="card" onclick="openHero(this, 'captain')">
+        <img src="images/caps.png">
         <h3>Captain America</h3>
     </div>
 
-    <div class="card" onclick="showHero('thor')">
-        <img src="thor.png" alt="Thor">
+    <div class="card" onclick="openHero(this, 'thor')">
+        <img src="images/thor.png">
         <h3>Thor</h3>
     </div>
 
-    <div class="card" onclick="showHero('hulk')">
-        <img src="hulk.png" alt="Hulk">
+    <div class="card" onclick="openHero(this, 'hulk')">
+        <img src="images/hulk.png">
         <h3>Hulk</h3>
     </div>
 
-    <div class="card" onclick="showHero('widow')">
-        <img src="blackwidow.png" alt="Black Widow">
+    <div class="card" onclick="openHero(this, 'widow')">
+        <img src="images/blackwidow.png">
         <h3>Black Widow</h3>
     </div>
-
 </section>
 
-<section class="details">
-    <h2 id="hero-name">Select an Avenger</h2>
-    <p id="hero-desc">Click on a character to view details</p>
-    <ul id="hero-info"></ul>
-</section>
-
-<script src="script.js"></script>
-
-<!-- Character Dashboard Overlay -->
+<!-- ===== HERO DASHBOARD ===== -->
 <div id="heroModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">×</span>
 
         <div class="modal-header">
-            <img id="modal-img" />
+            <img id="modal-img">
             <h2 id="modal-name"></h2>
             <p id="modal-title"></p>
         </div>
@@ -64,5 +81,6 @@
     </div>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>
