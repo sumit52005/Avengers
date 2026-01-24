@@ -219,7 +219,7 @@ const heroThemes = {
 
 // Audio elements for hero quotes (fallback to text-to-speech if files don't exist)
 const heroAudios = {
-    ironman: new Audio('audio/ironman-quote.mp3'),
+    ironman: new Audio('audio/iamironman.mp4'),
     captain: new Audio('audio/captain-quote.mp3'),
     thor: new Audio('audio/thor-quote.mp3'),
     hulk: new Audio('audio/hulk-quote.mp3'),
