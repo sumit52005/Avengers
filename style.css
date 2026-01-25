@@ -57,16 +57,28 @@ header p {
 }
 
 .card {
-    width: 250px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    border-radius: 25px;
+    width: 280px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
     text-align: center;
-    padding: 25px;
+    padding: 30px;
     cursor: pointer;
-    transition: all 0.4s ease;
-    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.card.stacked {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(15deg) scale(0.8);
+    z-index: 10;
+    opacity: 0.9;
+    box-shadow: 0 20px 60px rgba(229, 9, 20, 0.4);
 }
 
 .card::before {
@@ -247,13 +259,38 @@ header p {
 #intro-screen {
     position: fixed;
     inset: 0;
-    background: black;
+    background: linear-gradient(135deg, #0c0c0c, #1a1a1a, #2a2a2a);
     z-index: 3000;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     overflow: hidden;
+}
+
+/* Start Button */
+#start-btn {
+    background: linear-gradient(135deg, #b31217, #8b0000);
+    color: white;
+    border: 3px solid #fff;
+    padding: 20px 50px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 30px rgba(179, 18, 23, 0.6);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+#start-btn:hover {
+    background: linear-gradient(135deg, #8b0000, #b31217);
+    transform: scale(1.1);
+    box-shadow: 0 0 50px rgba(179, 18, 23, 0.9);
+    border-color: #e50914;
 }
 
 #intro-screen video {
@@ -283,14 +320,22 @@ header p {
     font-family: 'Courier New', monospace;
     color: #ffffff;
     text-shadow: 2px 2px 0px #000000;
-    padding: 10px;
+    padding: 20px 40px;
     background: rgba(0,0,0,0.8);
+    border: 2px solid #e50914;
+    border-radius: 10px;
+    cursor: pointer;
     overflow: hidden;
     white-space: nowrap;
-    border-right: 2px solid #ffffff;
-    width: 0;
+    width: auto;
     animation: typing 3s steps(25, end) forwards, blink-caret 0.75s step-end infinite;
     text-align: center;
+    transition: all 0.3s ease;
+}
+
+#journey-text:hover {
+    background: rgba(229, 9, 20, 0.8);
+    transform: scale(1.05);
 }
 
 @keyframes typing {

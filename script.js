@@ -136,15 +136,47 @@ window.addEventListener("load", () => {
     const logoVideo = document.getElementById("logoVideo");
 
     const soundBtn = document.getElementById("sound-btn");
+    const startBtn = document.getElementById("start-btn");
 
     const marvelLogo = document.getElementById("marvel-logo");
-    const journeyText = document.getElementById("journey-text");
     const avengersLogo = document.getElementById("avengers-logo");
 
     // Hide text initially
     marvelLogo.classList.add("hidden");
-    journeyText.classList.add("hidden");
     avengersLogo.classList.add("hidden");
+
+    // Start button click to begin videos
+    startBtn.addEventListener("click", () => {
+        startBtn.style.display = "none";
+        soundBtn.style.display = "block";
+
+        /* ===== PLAY FIRST VIDEO ===== */
+        introVideo.style.display = "block";
+        introVideo.play().catch(() => {});
+
+        introVideo.onended = () => {
+            introVideo.style.display = "none";
+
+            /* ===== PLAY SECOND VIDEO ===== */
+            logoVideo.style.display = "block";
+            logoVideo.play().catch(() => {});
+        };
+
+        /* ===== AFTER SECOND VIDEO ===== */
+        logoVideo.onended = () => {
+            // REMOVE INTRO SCREEN
+            introScreen.style.opacity = "0";
+            setTimeout(() => {
+                introScreen.style.display = "none";
+                // Stack cards after intro ends
+                const cards = document.querySelectorAll(".card");
+                cards.forEach(card => card.classList.add("stacked"));
+                setTimeout(() => {
+                    cards.forEach(card => card.classList.remove("stacked"));
+                }, 1000);
+            }, 1000);
+        };
+    });
 
     // Enable sound on user click
     soundBtn.addEventListener("click", () => {
@@ -154,33 +186,6 @@ window.addEventListener("load", () => {
         logoVideo.volume = 1;
         soundBtn.style.display = "none";
     });
-
-    /* ===== PLAY FIRST VIDEO ===== */
-    introVideo.play().catch(() => {});
-
-    introVideo.onended = () => {
-        introVideo.style.display = "none";
-
-        /* ===== PLAY SECOND VIDEO ===== */
-        logoVideo.style.display = "block";
-        logoVideo.play().catch(() => {});
-    };
-
-    /* ===== AFTER SECOND VIDEO ===== */
-    logoVideo.onended = () => {
-
-        // LET'S START A NEW JOURNEY
-        journeyText.classList.remove("hidden");
-        journeyText.classList.add("avengers-glow");
-
-        // REMOVE INTRO SCREEN
-        setTimeout(() => {
-            introScreen.style.opacity = "0";
-            setTimeout(() => {
-                introScreen.style.display = "none";
-            }, 1000);
-        }, 4000);
-    };
 });
 
 function openHero(card, heroKey) {
